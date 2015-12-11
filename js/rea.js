@@ -16,12 +16,12 @@ function Command(robot, tabletop, div) {
 		return robot.x < tabletop.unitX - 1 && robot.y < tabletop.unitY -1;
 	};
 	this.rotate = function(offset) {
-		var direction = {"NORTH":0,"EAST":1,"SOUTH":2,"WEST":3,0:"NORTH",1:"EAST",2:"SOUTH",3:"WEST"},
+		var direction = {"NORTH":0,"EAST":90,"SOUTH":180,"WEST":270,0:"NORTH",90:"EAST",180:"SOUTH",270:"WEST"},
 			index = robot.direction,
 			pointer;
 		if (direction[index] + offset < 0) {
-			pointer = direction[3];
-		} else if (direction[index] + offset > 3) {
+			pointer = direction[270];
+		} else if (direction[index] + offset > 270) {
 			pointer = direction[0];
 		} else {
 			pointer = direction[direction[index] + offset];
@@ -57,10 +57,10 @@ function Command(robot, tabletop, div) {
 				}
 			break;
 			case "LEFT" == command:
-				this.rotate(-1);
+				this.rotate(-90);
 			break;
 			case "RIGHT" == command:
-				this.rotate(1);
+				this.rotate(90);
 			break;
 			case "REPORT" == command:
 				if (this.placable()) {
@@ -69,24 +69,6 @@ function Command(robot, tabletop, div) {
 			break;
 		}
 	};
-}
-
-function readTextFile(file)
-{
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, false);
-    rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                var allText = rawFile.responseText;
-                alert(allText);
-            }
-        }
-    }
-    rawFile.send(null);
 }
 
 window.onload=function()
